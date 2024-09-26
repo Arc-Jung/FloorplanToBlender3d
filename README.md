@@ -205,8 +205,15 @@ These are some known and relevant issues with the current implementation:
 [GNU GENERAL PUBLIC LICENSE](license) Version 3, 29 June 2007
 
 COPYRIGHT @ Grebtsew 2021
-
+# TMR
+Build docker image and run server
 ```shell
 docker build --platform linux/amd64 -t ftb-server .
 docker-compose -f docker-compose.server.yml up -d
+```
+
+Run server locally
+```shell
+cd Server
+python main.py
 ```
