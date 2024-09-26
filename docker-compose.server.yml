@@ -10,8 +10,8 @@ version: '3.8'
 services:
   ftbserver:
     build: ./  # to speed things up you can pull docker image: grebtsew/floorplan-to-blender  # and remove this row
-    container_name: ftbserver
-    image: grebtsew/floorplan-to-blender # grebtsew/floorplan-to-blender
+    container_name: ftb-server
+    image: ftb-server # grebtsew/floorplan-to-blender
     stdin_open: true 
     tty: true
     ports:

@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # Welcome to this DockerFile for the Floorplan To Blender3d project
 # All steps of the installation are described below
@@ -49,10 +49,10 @@ RUN apt-get update && \
 ADD ./ ${PROGRAM_PATH}/
 
 # Setup python
-RUN python3.8 -m pip install --upgrade pip
-RUN python3.8 -m pip install -r ${PROGRAM_PATH}/requirements.txt
-RUN python3.8 -m pip install -r ${PROGRAM_PATH}/Docs/requirements.txt
-RUN python3.8 -m pip install -r ${PROGRAM_PATH}/Development\ Center/requirements.txt
+RUN pip3 install --upgrade pip
+RUN pip3 install -r ${PROGRAM_PATH}/requirements.txt
+RUN pip3 install -r ${PROGRAM_PATH}/Docs/requirements.txt
+RUN pip3 install -r ${PROGRAM_PATH}/Development\ Center/requirements.txt
 
 # Volume to share images and get data after execution
 VOLUME ${PROGRAM_PATH}/Images
@@ -71,7 +71,7 @@ EXPOSE 80 8000 8001
 # Variable used to choose if we are to use server, script or jupyter on execution
 # Default script
 # "script" | "server" | "jupyter"
-ENV MODE="script" 
+ENV MODE="server"
 
 RUN dos2unix ${PROGRAM_PATH}/Docker/docker-entrypoint.sh 
 RUN chmod +x ${PROGRAM_PATH}/Docker/docker-entrypoint.sh 
