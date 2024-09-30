@@ -117,15 +117,19 @@ class S(BaseHTTPRequestHandler):
                     rmi, kwargs = self.query_parser(parsed_data, Put)
                     if kwargs is None or rmi is None:
                         message = "Function unavailable!"
+                        print(message)
                     else:
                         kwargs["file"] = file
                         (message, _) = getattr(rmi, kwargs["func"])(**kwargs)
                 except ValueError as e:
                     message = "RECIEVED Put REQUEST WITH BAD DATA: " + str(e)
+                    print(message)
                 except KeyError as e:
                     message = "KeyError : " + str(e)
+                    print(message)
                 except Exception as e:
                     message = "Unknown error : " + str(e)
+                    print(message)
             else:
                 message = "NO FILE PROVIDED!"
         elif ctype == "html/text" or ctype == "json/application" or ctype is None:
