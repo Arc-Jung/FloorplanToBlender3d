@@ -10,9 +10,21 @@ Copyright (C) 2021 Daniel Westberg
 
 def create_file(ref, id, iformat, file):
     """Write incoming data to file"""
-    file_path = ref.shared.parentPath + "/" + ref.shared.imagesPath + "/" + id + iformat
-    open(file_path, "wb").write(file)
+    # Extract the actual image data from the form data
+    boundary = b'------WebKitFormBoundary'
+    parts = file.split(boundary)
+    for part in parts:
+        if b'Content-Disposition: form-data; name="data"; filename=' in part:
+            # Find the start of the actual image data
+            image_data_start = part.find(b'\r\n\r\n') + 4
+            image_data = part[image_data_start:]
+            break
+    else:
+        raise ValueError("Image data not found in the form data")
 
+    file_path = ref.shared.parentPath + "/" + ref.shared.imagesPath + "/" + id + iformat
+    with open(file_path, "wb") as f:
+        f.write(image_data)
 
 class Put(Api):
     def __init__(self, client, shared_variables):
