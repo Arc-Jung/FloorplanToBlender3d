@@ -102,6 +102,7 @@ class S(BaseHTTPRequestHandler):
             self._set_response()
             self.wfile.write(bytes(message, encoding="utf-8"))
         except ConnectionAbortedError as e:
+            print(f"ConnectionAbortedError: {e}")
             return  # This occurs when server is sending file and client isn't waiting for extra message.
 
     def do_PUT(self):

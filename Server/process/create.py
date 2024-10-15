@@ -20,6 +20,7 @@ from FloorplanToBlenderLib import (
     IO,
     const,
 )  # floorplan to blender lib
+import time
 
 """This process should create a 3d object file using the FTBLibrary"""
 
@@ -38,6 +39,7 @@ class Create(Process):
         self.update("out", id + oformat)
 
     def run(self):
+        start_time = time.time()
         # This is where the new thread will start
         image_path = self.shared.get_file_path(
             self.process["in"], self.shared.imagesPath, self.shared.images
@@ -149,4 +151,7 @@ class Create(Process):
 
         # Reindex here
         self.shared.reindex_files()
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        print(f"\n======================== 3D 모델 변환 소요 시간 : {elapsed_time:.2f} seconds ========================\n")
         print(f"Done with task: {cmd}")
