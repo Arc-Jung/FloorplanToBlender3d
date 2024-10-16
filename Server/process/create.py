@@ -21,6 +21,7 @@ from FloorplanToBlenderLib import (
     const,
 )  # floorplan to blender lib
 import time
+import datetime
 
 """This process should create a 3d object file using the FTBLibrary"""
 
@@ -39,7 +40,6 @@ class Create(Process):
         self.update("out", id + oformat)
 
     def run(self):
-        start_time = time.time()
         # This is where the new thread will start
         image_path = self.shared.get_file_path(
             self.process["in"], self.shared.imagesPath, self.shared.images
@@ -103,6 +103,8 @@ class Create(Process):
         program_path # Send this as parameter to script
         ] +  data_paths))
         """
+        start_time = time.time()
+        print("Start Time: ", datetime.datetime.now())
         self.process["state"] = self.process["state"] + 1
         self.update("status", "Creating objects in Blender3d")
 
@@ -121,6 +123,10 @@ class Create(Process):
             + data_paths
         )
 
+        print("End Time: ", datetime.datetime.now())
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        print(f"\n======================== 3D 모델 변환 소요 시간 : {elapsed_time:.2f} seconds ========================\n")
         self.process["state"] = self.process["state"] + 1
         self.update("status", "Create Object file")
 
@@ -151,7 +157,4 @@ class Create(Process):
 
         # Reindex here
         self.shared.reindex_files()
-        end_time = time.time()
-        elapsed_time = end_time - start_time
-        print(f"\n======================== 3D 모델 변환 소요 시간 : {elapsed_time:.2f} seconds ========================\n")
         print(f"Done with task: {cmd}")
